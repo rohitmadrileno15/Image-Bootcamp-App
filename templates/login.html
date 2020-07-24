@@ -1,0 +1,42 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="text-gray-700 body-font relative">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-12">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"> Log in</h1>
+ 
+      </div>
+      <div class="lg:w-1/2 md:w-2/3 mx-auto">
+        <div class="flex flex-wrap -m-2">
+            <form action="" method="post">
+
+                {{ form.csrf_token }}
+        
+        
+          <div class="p-2 w-full">
+            {{form.email(class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2"  ,placeholder="Enter Email") }}
+         
+          </div>
+          <div class="p-2 w-full">
+            {{form.password(class="bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4" ,autocomplete = "off",placeholder="Enter Password") }}
+          </div>
+          <div class="p-2 w-full">
+            {{form.submit(class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" ) }}            
+          </div>
+        
+        </form>
+
+
+
+        </div>
+        <br>
+        <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" href="/"> Home Page</a>
+      </div>
+
+    </div>
+  </section>
+
+{% endblock %}

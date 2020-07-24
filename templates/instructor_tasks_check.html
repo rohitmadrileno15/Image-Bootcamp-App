@@ -1,0 +1,57 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<section class="text-gray-700 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto">
+      <h1 class="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900"> <a class="muted"> {{username}} </a> , Here you can grade tasks</h1>
+      <a href="/instructor_homepage" class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0"> Go to Dashboard</a>
+    </div>
+  </div>
+</section> 
+
+
+
+<section class="text-gray-700 body-font">
+  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+    {% for row in submitted_tasks %}
+
+    {% if row.grade == None %}
+     
+    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+      <img class="object-cover object-center rounded" alt="hero" src="{{ url_for('static', filename= 'task_pictures_student/' + row.file_name) }}">
+    </div>
+    <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">by {{row.student_username}}</h1>
+      <p class="mb-8 leading-relaxed">Track - {{row.student_track}} , Note - {{row.note}}</p>
+      <div class="flex w-full md:justify-start justify-center"></div>
+      <form action="/instructor_homepage/grade_tasks" method="post" id="{{row.id}}">
+        <input type="text" hidden readonly value="{{row.id}}" name="rowid">
+        
+        <select placeholder = "Select A Grade" class="bg-gray-100 rounded mr-4 border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 lg:w-full xl:w-1/2 w-2/4" name="grades" id="grade">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+   
+        <input value="Grade" type="submit" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"/>  
+      
+       </form> </div>
+      <p class="text-sm mt-2 text-gray-500 mb-8 w-full">Grade out of 5</p>
+
+    </div>
+    {% endif %}
+
+{% endfor %}
+  </div>
+</section>
+
+
+ 
+
+
+
+{% endblock %}

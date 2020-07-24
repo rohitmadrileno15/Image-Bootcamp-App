@@ -1,0 +1,140 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="text-gray-700 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto">
+      <h1 class="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900">   Here you can see assigned tasks</h1>
+      <a href="/index" class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0"> Go to Dashboard</a>
+      
+    </div>
+  </div>
+</section>
+
+<script>
+  let array_p = [];
+  let array_instructor = [];
+</script>
+
+<section class="text-gray-700 body-font overflow-hidden">
+  {% for row   in data  %}
+
+  <script>
+     array_p.push('#'+'{{row.id}}');
+     array_instructor.push('#' + '{{row.id}}' + '{{row.instructor_username}}');
+  </script>
+
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <img alt="picture" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="./static/task_pictures_instructor/{{row.file_name}}">
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">{{row.date_time}}</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1"> {{row.Title}} </h1>
+        <div class="flex mb-4">
+          <a class="leading-relaxed" > by {{row.instructor_username}} </a>
+        
+        </div> 
+     
+        <div class="flex">
+          <span class="title-font font-medium text-2xl text-gray-900"> {{row.message}} </span>
+          <button id="{{row.id}}"  class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Submit</button>
+          <a download href="./static/task_pictures_instructor/{{row.file_name}}" class="rounded-full w-10 h-10 bg-white-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+            <img src="./static/download.svg" alt="">
+          </a>
+        </div>
+ 
+      </div>
+    </div>
+  </div>
+
+
+  {% endfor %}
+ 
+  <br>
+
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Submit your task</h2>
+      </div>
+      <div class="modal-body">
+        <br>
+        <form id="studentupload" enctype="multipart/form-data" method="post" action="/student_get_tasks/post_task">
+          
+          <div class="flex flex-wrap -m-2">
+            <input hidden  type="text" readonly  name="upldtext" id="studentupldtext">
+            <br>
+          </div>
+          <div class="flex flex-wrap -m-2">
+            <input hidden type="text" readonly  name="assigned_instructor" id="upldassigned_instructor">
+            <br>
+          </div>
+          <div class="p-2 w-full">
+            <input id="fileupload" class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-blue-500 text-base px-4 py-2" required name="myfile" type="file" />
+            </div>
+            
+          <div class="p-2 w-full">
+            <textarea  class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none h-48 focus:border-blue-500 text-base px-4 py-2 resize-none block" name="message" placeholder="Message"></textarea>
+          </div>
+          <div class="p-2 w-full">
+            <input class="flex mx-auto text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg" type="submit"/>
+          </div>  
+        </div>
+        </form>
+
+      </div>
+      <br>
+    </div>
+  
+  </div>
+  
+</section>
+
+<script>
+    console.log(array_p)
+    console.log(array_instructor)
+    
+
+    $("button").click(function(){
+      var i = 0;
+      while ( i < array_p.length) {
+      
+       $(array_p[i]).click(function() {   
+       
+        var modal = document.getElementById("myModal");
+      
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }    
+        $("#studentupldtext").val(array_p[i-1].replace("#" , "")) ;
+        var instructor_value = array_instructor[i-1].slice(2, array_instructor[i-1].length);
+        $("#upldassigned_instructor").val( instructor_value );     
+     
+      } )
+      
+      i++;
+    }
+
+
+        
+    
+    });
+ 
+ 
+   
+ 
+
+
+  </script>
+  
+
+
+{% endblock %}

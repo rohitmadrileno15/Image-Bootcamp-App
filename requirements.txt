@@ -1,0 +1,10 @@
+regex
+flask
+pyOpenSSL
+password_generator
+datetime
+flask_sqlalchemy
+flask_wtf
+wtforms
+flask_login
+

@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<section class="text-gray-700 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto">
+      <h1 class="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900">You are Student , <a class="muted"> {{username}} </a></h1>
+      <a href="/loggedout" class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0">Logout</a>
+      &nbsp; 
+      <a href="/student_get_tasks" class="flex-shrink-0 text-black bg-gray-500 border-2 py-2 px-10 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0">See Tasks</a>
+    </div>
+    <br>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">You have chosen the <a class="user_type_class">{{user_type}}</a> track</p>
+  </div>
+</section>
+
+ 
+ 
+<section class="text-gray-700 body-font overflow-hidden">
+  <div class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto">
+    <h1 class="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900">  Tasks that are done will appear here</h1>      
+  </div>
+  {% for row , row2 in data|zip(data2) %}
+
+ 
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <img alt="picture" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="./static/task_pictures_student/{{row2.file_name}}">
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">{{row.date_time}}</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1"> {{row.Title}} </h1>
+        <div class="flex mb-4">
+          <a class="leading-relaxed" > by {{row.instructor_username}} </a>
+        </div> 
+     
+        <div class="flex">
+          <span class="title-font font-medium text-2xl text-gray-900"> {{row.message}} </span>
+          <br>
+          
+        </div>
+        <span class="title-font font-medium text-2xl text-gray-900"> Grade = {{row2.grade}} </span>
+        <div style="display:flexbox">
+          {% if row2.submitted ==  "YES" %}
+          <div class="div-green"></div>
+          {% else %}
+          <div class="div-red"></div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% endfor %}
+ 
+  <br>
+  
+</section>
+
+
+{% endblock %}
